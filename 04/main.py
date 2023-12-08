@@ -23,9 +23,7 @@ def getPoints(playCards, solution2=False):
             for i in range(1, commonNumbers + 1):
                 cards[index + i] += cards[index]
         else:
-            if commonNumbers == 0:
-                endNumbers.append(0)
-            else:
+            if commonNumbers != 0:
                 endNumbers.append(2 ** (commonNumbers - 1))
     if solution2:
         return cards

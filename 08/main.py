@@ -31,7 +31,7 @@ def getStartPositions(directions):
     return re.findall(r"([A-Z0-9]{2}A)", "\n".join(directions))
 
 
-def getSteps(movement, directions, start, target, solution2=False):
+def getSteps(movement, directions, start, solution2=False):
     movementCycle = itertools.cycle(movement)
     currentPosition = start
     stepsCounter = 0
@@ -40,7 +40,7 @@ def getSteps(movement, directions, start, target, solution2=False):
         currentPosition = nextPosition(directions[currentPosition], next(movementCycle))
         stepsCounter += 1
         targetReached = (
-            currentPosition == target if not solution2 else currentPosition[-1] == "Z"
+            currentPosition == "ZZZ" if not solution2 else currentPosition[-1] == "Z"
         )
     return stepsCounter
 
@@ -48,7 +48,7 @@ def getSteps(movement, directions, start, target, solution2=False):
 def getCycleSteps(movement, directions):
     startPositions = getStartPositions(directions)
     cycleSteps = [
-        getSteps(movement, directions, start, "AOC", solution2=True)
+        getSteps(movement, directions, start, solution2=True)
         for start in startPositions
     ]
     return cycleSteps
@@ -56,7 +56,7 @@ def getCycleSteps(movement, directions):
 
 def solution1(filecontent):
     movement, directions = getDirections(filecontent)
-    totalSteps = getSteps(movement, directions, "AAA", "ZZZ")
+    totalSteps = getSteps(movement, directions, "AAA")
     print(totalSteps)
 
 
