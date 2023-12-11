@@ -30,27 +30,20 @@ def getMinimumDistances(
 ):
     distances = []
     for start, target in itertools.combinations(universePositions, 2):
-        if start[0] < target[0]:
-            horizontalAddition = len(
-                [i for i in emptyHorizontal if start[0] < i < target[0]]
-            )
-        else:
-            horizontalAddition = len(
-                [i for i in emptyHorizontal if target[0] < i < start[0]]
-            )
+        startHorizontal = min(start[0], target[0])
+        endHorizontal = max(start[0], target[0])
+        startVertical = min(start[1], target[1])
+        endVertical = max(start[1], target[1])
+        horizontalAddition = len(
+            [i for i in emptyHorizontal if startHorizontal < i < endHorizontal]
+        )
+        verticalAddition = len(
+            [i for i in emptyVertical if startVertical < i < endVertical]
+        )
         if solution2:
             horizontalAddition *= 999999
-        horizontalDistance = np.abs(start[0] - target[0]) + horizontalAddition
-        if start[1] < target[1]:
-            verticalAddition = len(
-                [i for i in emptyVertical if start[1] < i < target[1]]
-            )
-        else:
-            verticalAddition = len(
-                [i for i in emptyVertical if target[1] < i < start[1]]
-            )
-        if solution2:
             verticalAddition *= 999999
+        horizontalDistance = np.abs(start[0] - target[0]) + horizontalAddition
         verticalDistance = np.abs(start[1] - target[1]) + verticalAddition
         distances.append(horizontalDistance + verticalDistance)
     return distances
